@@ -1,32 +1,33 @@
-//core module
-const http = require("http");
-//thord party module
-const pokemon = require("pokemon");
-const data= require("./data")
-// const fs = require("fs");
-// const path = require("path");
-// const dirPath = path.join(__dirname, "files");
-// const filePath = `${dirPath}/file.text`;
-// fs.writeFileSync(filePath, "Kina oralo lagyo share bazar!");
-// fs.readFile(filePath, "utf-8", (err, data) => {
-//   if (err) throw err;
-//   console.log(data);
-// });
-const PORT = 4000;
-const hostname = "localhost";
-// const home = fs.readFileSync("./home.html");
-const server = http.createServer((req, res) => {
-  res.writeHead(200, { "Content-Type": "application/json" });
-  res.write(
-    JSON.stringify(data))
+const express = require("express");
+const path = require("path");
+// const bodyParser = require("body-parser");
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+//http method
+app.get("/", (req, res) => {
+  //   res.sendFile(path.join(__dirname + "/home.html"));
+});
+app.post("/api/v1/login", (req, res) => {
+  const userName = req.body.name;
+  const userEmail = req.body.email;
+  const userPassword = req.body.password;
+  res.json({
+    success: true,
+    name: userName,
+    email: userEmail,
+    password: userPassword,
+  });
+});
+//port
+const PORT = 5000;
+app.listen(PORT, () => {
+  console.log(`Server is running at port: http://localhost:${PORT}`);
+});
 
-  res.end();
-  // if (req.url === "/") {
-  //   return res.end(home);
-  // } else {
-  //   return res.end("<h1>page not found,404</h1>");
-  // }
-});
-server.listen(PORT, hostname, () => {
-  console.log(`server is running at port: http://${hostname}:${PORT}`);
-});
+
+
+
+
+
+
