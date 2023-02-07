@@ -5,6 +5,7 @@ mongoose.set('strictQuery', true)
 const dotenv = require('dotenv')
 const colors = require('colors')
 const ConnectionDB = require('./config/db')
+const logger = require("morgan");
 
 //configure
 
@@ -13,6 +14,7 @@ dotenv.config()
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+app.use(logger("dev"));
 
 ConnectionDB()
 
@@ -53,6 +55,7 @@ app.post("/api/v1/add/product", async (req, res) => {
     message: "product added successfully!",
     product,
   });
+ 
 });
 
 
@@ -69,7 +72,46 @@ app.get("/api/v1/add/products",async(req,res)=>{
 })
 
 
+//update product
 
+
+app.put("/api/v1/product/update/:id", async (req, res) => {
+  let product = await Product.findById(req.params.id);
+  if (!product) {
+    return res.status(404).json({
+      success: false,
+      message: "product not found!",
+    });
+  }
+  product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  });
+  res.status(200).json({
+    success: true,
+    message: "product update successfully!",
+    product,
+  });
+});
+
+
+
+//delete product
+app.delete("/api/v1/product/delete/:id",async(req,res)=>{
+  const product =  Product.findById(req.params.id);
+  if(!product){
+    return res.status(404).json({
+      success:false,
+      message: "product not found!"
+    })
+
+  }
+
+  await product.remove();
+  res.status(200).json({
+    success:true,
+    message: "product deleted successfully!"
+  })
+})
 
 
 
