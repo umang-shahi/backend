@@ -1,5 +1,5 @@
 const express = require("express");
-const { createProduct, getAllProducts ,updateProduct,deleteproducts} = require("../controllers/productcontroller");
+const { createProduct, getAllProducts ,updateProduct, deleteproducts} = require("../controllers/productcontroller");
 const upload = require("../file/upload");
 
 const router = express.Router()
@@ -10,7 +10,8 @@ const router = express.Router()
 
 router.route("/products").get(getAllProducts);
 
-router.route("/product/update/:id").put(updateProduct);
+router.route("/product/update/:id")
+.put(upload.single("productImg"), updateProduct);
 
 router.route("/product/delete/:id").delete(deleteproducts);
 

@@ -14,8 +14,18 @@ exports.createProduct = async(req,res)=>{
             quantity
           } = req.body;
 
-          const file = req.file;
-          console.log(file);
+
+
+          let file;
+          if(req.file){
+            file = req.file.filename
+          }else{
+            return res.status(400),json({
+              success:false,
+              message: "file not found! "
+            })
+          }
+          
         
          
             if(!productName || !description || !category ||!SKU ||!manufacturer ||!isInStock ||!price ||!quantity){
@@ -32,7 +42,8 @@ exports.createProduct = async(req,res)=>{
             manufacturer,
             isInStock,
             price,
-            quantity
+            quantity,
+            productImg:file
           })
         
           res.status(201).json({
@@ -71,7 +82,7 @@ exports.getAllProducts = async(req,res)=>{
         })
     } catch (error) {
         return res.status(500).json({
-            success:true,
+            success:false,
             message: "error! "
         })
     }
@@ -95,6 +106,19 @@ exports.updateProduct = async (req, res) => {
       price,
       quantity
     } = req.body;
+
+    let file;
+    if(req.file){
+      file = req.file.filename;
+
+    }else{
+      return res.status(400).json({
+        success: false,
+        message: "file not found!"
+      })
+    }
+
+
     if (
       !productName ||
       !description ||
@@ -130,7 +154,8 @@ exports.updateProduct = async (req, res) => {
           ratings,
           isInStock,
           price,
-          quantity
+          quantity,
+          productImg:file
         },
         { new: true, runValidators: true, useFindAndModify: false }
       );

@@ -20,6 +20,8 @@ ConnectionDB()
 //routes
 app.use("/api/v1",require("./routes/productroutes"));
 
+//url to pprovide access  for the image
+app.use(express.static("public/gallery"))
 
 
 app.get("/",(req,res)=>{
