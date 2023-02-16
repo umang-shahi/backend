@@ -11,6 +11,12 @@ const storage = multer.diskStorage({
   },
 });
 
+
+
+
+
+
+
 //filter file
 
 const filefilter = (req, res, cb) => {
@@ -26,9 +32,17 @@ const filefilter = (req, res, cb) => {
   }
 };
 
+
+
+
+
+
 const upload = multer({
   storage: storage,
   filefilter: filefilter,
 });
+
+
+
 
 module.exports = upload;
