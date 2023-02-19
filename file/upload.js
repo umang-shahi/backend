@@ -1,7 +1,5 @@
 const multer = require("multer");
-
-//storage make
-
+//storage mpde
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./public/gallery");
@@ -10,39 +8,21 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + file.originalname);
   },
 });
-
-
-
-
-
-
-
-//filter file
-
-const filefilter = (req, res, cb) => {
+//filter files
+const filefilter = (req, file, cb) => {
   if (
-    file.mimetype === "image/jpeg" ||
-    file.mimetype === "image/jpg " ||
-    file.mimetype === "image/png"  ||
-    file.mimetype === "image/gif"
+    file.mimeType == "image/jpeg" ||
+    file.mimeType === "image/jpg" ||
+    file.mimeType === "image/png" ||
+    file.mimeType === "image/gif"
   ) {
     cb(null, true);
   } else {
     cb(null, false);
   }
 };
-
-
-
-
-
-
 const upload = multer({
   storage: storage,
   filefilter: filefilter,
 });
-
-
-
-
 module.exports = upload;

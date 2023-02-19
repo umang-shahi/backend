@@ -1,9 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs"); //password encryption  bcrypt npm pack
-const jwt = require("jsonwebtoken");
-
-
-
+const jwt = require("jsonwebtoken");   
 const userSchema = new mongoose.Schema(
   {
     fullName: {
@@ -50,27 +47,15 @@ userSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
-
-
-//generate token
-
-userSchema.methods.getJwtToken = function(){
-  return jwt.sign({id:this._id},process.env.JWT_SECRET,{
-expiresIn:"2h",
-  })
-}
-
-
-//compare password
-
-
-userSchema.methods.comparePassword = async function (enteredPassword){
-  return await bcrypt.compare(enteredPassword,this.password);
-}
-
-
-
-
-
+// generate tocken
+userSchema.methods.getJwtToken = function () {
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+    expiresIn: "2h",
+  });
+};
+// compare password
+userSchema.methods.comparePassword = async function (enterdPassword) {
+  return await bcrypt.compare(enterdPassword, this.password);
+};
 const User = mongoose.model("user", userSchema);
 module.exports = User;
