@@ -7,6 +7,7 @@ const colors = require("colors");
 const ConnectionDB = require("./config/db");
 const logger = require("morgan"); //its showa hit method in console
 const cloudinary = require("cloudinary");
+const errorMiddleware = require("./middlewares/error");
 //configure
 dotenv.config();
 const app = express();
@@ -41,6 +42,9 @@ app.use(express.static("public/gallery"));
 app.get("/", (req, res) => {
   res.send("<h1>Server is running</h1>");
 });
+
+//middleware call
+app.use(errorMiddleware);
 //port
 const PORT = process.env.PORT;
 const server = app.listen(PORT, () => {
@@ -59,3 +63,5 @@ process.on("unhandledRejection",(err)=>{
     process.exit(1);
   })
 })
+
+

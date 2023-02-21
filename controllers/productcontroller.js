@@ -1,6 +1,7 @@
 const Product = require("../models/product");
 const getDataUri = require("../utils/datauri");
 const cloudinary = require("cloudinary");
+const ApiFeatures = require("../utils/apifeatures");
 exports.createproduct = async (req, res) => {
   try {
     const {
@@ -73,7 +74,9 @@ exports.createproduct = async (req, res) => {
 //getProduct
 exports.getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find();
+    const resultPerPage = 5;
+    const apifeatures = new ApiFeatures(Product.find(),req.query).search().filter().pagination(resultPerPage);
+    const products = await apifeatures.query;
     if (!products) {
       return res.status(404).json({
         success: false,

@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const getDataUri = require("../utils/datauri");
 const cloudinary = require("cloudinary");
+const catchasyncerror = require("../middlewares/catchasyncerror");
 // const { use } = require("../routes/productroutes");
 exports.register = async (req, res) => {
   const { fullName, mobileNo, email, password } = req.body;
@@ -378,36 +379,33 @@ exports.getSingleUserByAdmin = async(req,res)=>{
 
 //delete user from database (by admin)
 
-exports.deleteSingleUser = async(req,res)=>{
-  try {
+// exports.deleteSingleUser = catchasyncerror(
+//   async(req,res,next)=>{
+ 
 
-    let user = await User.findById(req.params.id)
-    if(!user){
-      return res.status(500).json({
-        success:false,
-        message:"User does not exist with this id"
-      })
-    }
+//     let user = await User.findById(req.params.id)
+//     if(!user){
+//       return res.status(500).json({
+//         success:false,
+//         message:"User does not exist with this id"
+//       })
+//     }
 
-    const imgId = user.avatar.public_id
-    if(!imgId){
-      await cloudinary.v2.uploader.destroy(imgId,
-        {
-          folder:"profileImg"
-        })
-    }
+//     const imgId = user.avatar.public_id
+//     if(!imgId){
+//       await cloudinary.v2.uploader.destroy(imgId,
+//         {
+//           folder:"profileImg"
+//         })
+//     }
 
-    await user.remove();
+//     await user.remove();
 
-    res.status(200).json({
-      success:false,
-      message:"user delete successfully!"
-    })
+//     res.status(200).json({
+//       success:false,
+//       message:"user delete successfully!"
+//     })
     
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-}
+//   }
+ 
+// )
