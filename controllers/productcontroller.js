@@ -14,6 +14,9 @@ exports.createproduct = async (req, res) => {
       IsInStock,
       price,
     } = req.body;
+
+    req.body.user = req.user.id;
+
     let file;
     if (req.file) {
       file = req.file;
@@ -56,8 +59,17 @@ exports.createproduct = async (req, res) => {
         public_id: myCloud.public_id,
         url: myCloud.secure_url,
       },
+
+      user:req.user.id
       // productImg: file,
     });
+
+
+    //population
+
+    await product.populate({path: "user",select:"fullName"})
+
+
     res.status(201).json({
       success: true,
       message: "product create successfully!",

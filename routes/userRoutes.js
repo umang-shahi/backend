@@ -1,5 +1,5 @@
 const express = require("express");
- const { register,login,profileUpdate, changePassword, singleUser, getAllUsers, getSingleUserByAdmin, deleteSingleUser } = require("../controllers/userController");
+ const { register,login,profileUpdate, changePassword, singleUser, getAllUsers, getSingleUserByAdmin } = require("../controllers/userController");
 const { auth, isAuthAdmin } = require("../middlewares/auth");
 const singleUpload = require("../middlewares/multer");
 // const createUser = require("../controllers/userController");
@@ -28,6 +28,6 @@ router.route("/all/users").get(auth,isAuthAdmin,getAllUsers);
 router.route("/single/user/:id").get(auth,isAuthAdmin,getSingleUserByAdmin);
 
 //delete user by admin
-router.route("/delete/user/:id").delete(auth,isAuthAdmin,deleteSingleUser)
+// router.route("/delete/user/:id").delete(auth,isAuthAdmin,deleteSingleUser)
 
 module.exports = router;

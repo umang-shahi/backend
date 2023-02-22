@@ -1,7 +1,7 @@
 const User = require("../models/user");
 const getDataUri = require("../utils/datauri");
 const cloudinary = require("cloudinary");
-const catchasyncerror = require("../middlewares/catchasyncerror");
+// const catchasyncerror = require("../middlewares/catchasyncerror");
 // const { use } = require("../routes/productroutes");
 exports.register = async (req, res) => {
   const { fullName, mobileNo, email, password } = req.body;

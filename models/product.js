@@ -42,6 +42,13 @@ const productSchema = new mongoose.Schema(
       maxLength: [5, "Length must be 5"],
       default: 1,
     },
+
+    user:{
+      type: mongoose.Schema.ObjectId,
+      ref:"user",
+      required: "true",
+    },
+
     price: {
       type: Number,
       required: [true, "Price field must be filled"],
